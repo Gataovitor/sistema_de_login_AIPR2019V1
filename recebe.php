@@ -2,5 +2,5 @@
 //back-end
 
 print_r($_POST);
-print("alo Ha!")
+print("alo Ha!");
 
