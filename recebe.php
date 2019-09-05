@@ -1,4 +1,6 @@
 <?php
+// Inicializando a sessão
+session_start();
 
 //É necessário fazer a conexão com o Banco de Dados
 require_once "configDB.php";
@@ -11,10 +13,28 @@ function verificar_entrada($entrada)
     return $saida;
 }
 
-if (
-    isset($_POST['action']) &&
+if( isset($_POST['action']) &&
+    $_POST['action'] == 'login'){
+//Verificação e Login do usuário
+$nomeUsuario = verificar_entrada($_POST['nomeUsuario']);
+$senhaUsuario = verificar_entrada($_POST['senhaUsuario']);
+$senha = sha1($senhaUsuario);
+//Test
+//echo "Usuario: $nomeUsuario - senha: $senha";
+$sql = $conecta->prepare("SELECT * FROM usuario WHERE 
+nomeUsuario = ? AND senha = ?");
+$sql->bind_param("ss", $nomeUsuario, $senha);
+$sql->execute();
+
+$busca = $sql->fetch();
+if ($busca != null) {
+    echo "ok";
+}else {
+    echo "Usuario e senha não conferem";
+}
+}else if (isset($_POST['action']) &&
     $_POST['action'] == 'cadastro'
-) {
+) { //Cadastro de um novo usuário
     //Pegar os campos do formulário
     $nomeCompleto = verificar_entrada($_POST['nomeCompleto']);
     $nomeUsuario = verificar_entrada($_POST['nomeUsuário']);
@@ -35,8 +55,8 @@ if (
     } else {
         //echo "<h5> senha codificada: $senha</h5>";
         //Verificar se o usuário já existe no banco de dados
-        $sql = $conecta->prepare("SELECT nomeUsuario, senha FROM 
-            usuario WHERE nomeUsuario = ? OR email = ?");
+        $sql = $conecta->prepare("SELECT nomeUsuario, email FROM 
+usuario WHERE nomeUsuario = ? OR email = ?");
         //Substitui cada ? por uma string abaixo
         $sql->bind_param("ss", $nomeUsuario, $emailUsuario);
         $sql->execute();
@@ -48,8 +68,8 @@ if (
             echo "<p>E-mail já em uso, tente outro</p>";
         } else {
             $sql = $conecta->prepare("INSERT into usuario 
-                (nome, nomeUsuario, email, senha, dataCriacao)
-                values(?, ?, ?, ?, ?)");
+(nome, nomeUsuario, email, senha, dataCriacao)
+values(?, ?, ?, ?, ?)");
             $sql->bind_param(
                 "sssss",
                 $nomeCompleto,
@@ -67,5 +87,5 @@ if (
     }
 } else {
     echo "<h1 style='color:red'>Esta página não pode 
-    ser acessada diretamente</h1>";
+ser acessada diretamente</h1>";
 }
