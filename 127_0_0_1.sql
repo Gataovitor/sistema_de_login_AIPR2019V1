@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23-Ago-2019 às 14:15
+-- Tempo de geração: 06-Set-2019 às 16:44
 -- Versão do servidor: 10.3.16-MariaDB
 -- versão do PHP: 7.3.7
 
@@ -30,19 +30,24 @@ USE `sistemadelogin`;
 --
 -- Estrutura da tabela `usuario`
 --
--- Criação: 23-Ago-2019 às 17:10
--- Última actualização: 23-Ago-2019 às 17:10
---
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `idUsuario` int(10) UNSIGNED NOT NULL,
   `nome` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nomeUsuario` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `senha` char(40) COLLATE utf8mb4_bin NOT NULL,
-  `datacriacao` datetime NOT NULL
+  `dataCriacao` datetime NOT NULL,
+  `avatar_url` varchar(220) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `nome`, `nomeUsuario`, `email`, `senha`, `dataCriacao`, `avatar_url`) VALUES
+(1, 'Dinossauro Rexnux', 'dinonux', 'dinonux@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2019-09-06 16:07:23', 'https://tarcnux.files.wordpress.com/2011/12/tarcnux_dez_2011_com_a_cabec3a7a_nas_nuvens.jpg'),
+(2, 'Topo Gigio', 'topogigio', 'gigio@bol.com.br', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2019-09-06 16:23:38', 'https://3.bp.blogspot.com/_d-lesN9Fpho/TFIazIlq5VI/AAAAAAAAABs/3YxA0Zns9Wc/w1200-h630-p-k-no-nu/topo_gigio_08.jpg');
 
 --
 -- Índices para tabelas despejadas
@@ -63,7 +68,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
