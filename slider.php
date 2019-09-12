@@ -4,7 +4,7 @@ require_once 'session.php';
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <!-- Required meta tags -->
